@@ -20,6 +20,7 @@ digraph DB {
     play_session [label="{ play_session \l
         | id \l
         | start_time \l
+        | end_time \l
     }"]
 
     play_session_item [label="{ play_session_item \l
