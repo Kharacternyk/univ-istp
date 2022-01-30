@@ -32,6 +32,8 @@ digraph DB {
         | barcode \l
         | count \l
         | language \l
+        | publishing_date \l
+        | in_catalog_since_date \l
         | publisher_id \l
         | game_id \l
     }"]
