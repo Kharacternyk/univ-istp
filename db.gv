@@ -1,0 +1,85 @@
+digraph DB {
+    graph [ranksep=0.6]
+    node [shape=record fontname=monospace style=rounded]
+    edge [
+        arrowhead=none arrowtail=none headlabel=1 taillabel=∞ fontname=sans
+        labeldistance=1.5
+    ]
+
+    club_member [label="{ club_member \l
+        | phone \l
+        | name \l
+    }"]
+
+    player [label="{ player \l
+        | id \l
+        | club_member_id \l
+        | game_session_id \l
+    }"]
+
+    play_session [label="{ play_session \l
+        | id \l
+        | start_time \l
+    }"]
+
+    play_session_item [label="{ play_session_item \l
+        | id \l
+        | play_session_id \l
+        | barcode \l
+    }"]
+
+    game_localization [label="{ game_localization \l
+        | barcode \l
+        | count \l
+        | language \l
+        | publisher_id \l
+        | game_id \l
+    }"]
+
+    game [label="{ game \l
+        | id \l
+        | playtime \l
+        | min_players \l
+        | max_players \l
+        | category_id \l
+    }"]
+
+    publisher [label="{ publisher \l
+        | id \l
+        | name \l
+        | country \l
+    }"]
+
+    category [label="{ category \l
+        | id \l
+        | name \l
+    }"]
+
+    author [label="{ author \l
+        | id \l
+        | name \l
+        | country \l
+    }"]
+
+    authorship [label="{ authorship \l
+        | id \l
+        | author_id \l
+        | barcode \l
+    }"]
+
+    game_localization -> publisher
+    game_localization -> game
+    game -> category
+
+    game -> author [style=dashed headlabel=∞]
+    authorship -> author
+    game -> authorship [dir=back headlabel=∞ taillabel=1]
+
+    play_session -> game_localization [style=dashed headlabel=∞]
+    play_session -> play_session_item [dir=back headlabel=∞ taillabel=1]
+    play_session_item -> game_localization
+
+    club_member -> play_session [style=dashed headlabel=∞]
+    club_member -> player [dir=back headlabel=∞ taillabel=1]
+    player -> play_session
+}

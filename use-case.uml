@@ -1,0 +1,27 @@
+@startuml
+
+left to right direction
+
+actor "Club Member" as member
+actor "Club Administrator" as admin
+
+package "Board Game Club Application" {
+    member -- (Book a game session)
+    (Book a game session) .> (Choose other club members) : <<include>>
+    (Book a game session) .> (Query available games) : <<include>>
+    member -- (Query available games)
+
+    rectangle "Member CRUD" {
+        admin -- (Register a new member)
+        admin -- (Edit information about a member)
+        admin -- (Expel a member)
+    }
+
+    rectangle "Game CRUD" {
+        admin -- (Add a new game to the catalog)
+        admin -- (Edit information about a game in the catalog)
+        admin -- (Remove a game from the catalog)
+    }
+}
+
+@enduml
