@@ -7,14 +7,15 @@ digraph DB {
     ]
 
     club_member [label="{ club_member \l
-        | phone \l
+        | id \l
+        | phone \l
         | name \l
     }"]
 
     player [label="{ player \l
         | id \l
         | club_member_id \l
-        | game_session_id \l
+        | play_session_id \l
     }"]
 
     play_session [label="{ play_session \l
@@ -31,10 +32,10 @@ digraph DB {
 
     game_localization [label="{ game_localization \l
         | barcode \l
-        | count \l
-        | language \l
         | publishing_date \l
         | in_catalog_since_date \l
+        | in_catalog_count \l
+        | language_id \l
         | publisher_id \l
         | game_id \l
     }"]
@@ -50,7 +51,7 @@ digraph DB {
     publisher [label="{ publisher \l
         | id \l
         | name \l
-        | country \l
+        | country_id \l
     }"]
 
     category [label="{ category \l
@@ -61,13 +62,23 @@ digraph DB {
     author [label="{ author \l
         | id \l
         | name \l
-        | country \l
+        | country_id \l
     }"]
 
     authorship [label="{ authorship \l
         | id \l
         | author_id \l
-        | barcode \l
+        | game_id \l
+    }"]
+
+    country [label="{ country \l
+        | id \l
+        | name \l
+    }"]
+
+    language [label="{ language \l
+        | id \l
+        | name \l
     }"]
 
     game_localization -> publisher
@@ -85,4 +96,8 @@ digraph DB {
     club_member -> play_session [style=dashed headlabel=∞]
     club_member -> player [dir=back headlabel=∞ taillabel=1]
     player -> play_session
+
+    publisher -> country
+    author -> country
+    game_localization -> language
 }
