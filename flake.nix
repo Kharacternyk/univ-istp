@@ -5,11 +5,6 @@
         pkgs.postgresql_14
         (pkgs.python310.withPackages (p: [p.psycopg2 p.django]))
       ];
-      shellHook = ''
-        export PGDATA="$(realpath .)/.pgdata"
-        export PGHOST="$PGDATA"
-      '';
-      PGDATABASE = "bgclub";
     };
   };
 }
