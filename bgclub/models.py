@@ -65,11 +65,11 @@ class GameLocalization(models.Model):
     barcode = models.PositiveBigIntegerField("штрих-код", primary_key=True)
     game = models.ForeignKey("Game", models.CASCADE, verbose_name="гра")
     name = models.TextField("ім'я")
+    in_catalog_count = models.PositiveIntegerField("наявна кількість у каталозі")
     publishing_date = models.DateField("дата видання", blank=True, null=True)
     in_catalog_since_date = models.DateField(
         "дата появи у каталозі", blank=True, null=True
     )
-    in_catalog_count = models.PositiveIntegerField("наявна кількість у каталозі")
     language = models.ForeignKey(
         "Language", models.CASCADE, blank=True, null=True, verbose_name="мова"
     )
