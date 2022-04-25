@@ -3,7 +3,7 @@ from django.db import models
 
 class Authors(models.Model):
     name = models.TextField(unique=True)
-    country = models.ForeignKey("Countries", models.DO_NOTHING, blank=True, null=True)
+    country = models.ForeignKey("Countries", models.CASCADE, blank=True, null=True)
     games = models.ManyToManyField("Games", through="Authorship")
 
     def __str__(self):
@@ -52,15 +52,13 @@ class Countries(models.Model):
 
 class GameLocalizations(models.Model):
     barcode = models.BigIntegerField(primary_key=True)
-    game = models.ForeignKey("Games", models.DO_NOTHING)
+    game = models.ForeignKey("Games", models.CASCADE)
     name = models.TextField()
     publishing_date = models.DateField(blank=True, null=True)
     in_catalog_since_date = models.DateField(blank=True, null=True)
     in_catalog_count = models.IntegerField()
-    language = models.ForeignKey("Languages", models.DO_NOTHING, blank=True, null=True)
-    publisher = models.ForeignKey(
-        "Publishers", models.DO_NOTHING, blank=True, null=True
-    )
+    language = models.ForeignKey("Languages", models.CASCADE, blank=True, null=True)
+    publisher = models.ForeignKey("Publishers", models.CASCADE, blank=True, null=True)
     play_sessions = models.ManyToManyField("PlaySessions", through="PlaySessionItems")
 
     def __str__(self):
@@ -77,7 +75,7 @@ class Games(models.Model):
     playtime = models.IntegerField(blank=True, null=True)
     min_players = models.IntegerField(blank=True, null=True)
     max_players = models.IntegerField(blank=True, null=True)
-    category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
+    category = models.ForeignKey(Categories, models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -113,7 +111,7 @@ class PlaySessions(models.Model):
 
 class Publishers(models.Model):
     name = models.TextField(unique=True)
-    country = models.ForeignKey(Countries, models.DO_NOTHING, blank=True, null=True)
+    country = models.ForeignKey(Countries, models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.country})"
@@ -124,8 +122,8 @@ class Publishers(models.Model):
 
 
 class Authorship(models.Model):
-    author = models.ForeignKey(Authors, models.DO_NOTHING)
-    game = models.ForeignKey("Games", models.DO_NOTHING)
+    author = models.ForeignKey(Authors, models.CASCADE)
+    game = models.ForeignKey("Games", models.CASCADE)
 
     class Meta:
         managed = False
@@ -133,8 +131,8 @@ class Authorship(models.Model):
 
 
 class PlaySessionItems(models.Model):
-    play_session = models.ForeignKey("PlaySessions", models.DO_NOTHING)
-    game = models.ForeignKey(GameLocalizations, models.DO_NOTHING, db_column="barcode")
+    play_session = models.ForeignKey("PlaySessions", models.CASCADE)
+    game = models.ForeignKey(GameLocalizations, models.CASCADE, db_column="barcode")
     count = models.IntegerField(default=1)
 
     class Meta:
@@ -143,8 +141,8 @@ class PlaySessionItems(models.Model):
 
 
 class Players(models.Model):
-    club_member = models.ForeignKey(ClubMembers, models.DO_NOTHING)
-    play_session = models.ForeignKey(PlaySessions, models.DO_NOTHING)
+    club_member = models.ForeignKey(ClubMembers, models.CASCADE)
+    play_session = models.ForeignKey(PlaySessions, models.CASCADE)
 
     class Meta:
         managed = False
