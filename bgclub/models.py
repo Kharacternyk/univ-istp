@@ -7,7 +7,7 @@ class Authors(models.Model):
     games = models.ManyToManyField("Games", through="Authorship")
 
     def __str__(self):
-        return f"{self.name} ({self.country})"
+        return f"{self.name} [{self.country}]"
 
     class Meta:
         managed = False
@@ -31,7 +31,7 @@ class ClubMembers(models.Model):
     play_sessions = models.ManyToManyField("PlaySessions", through="Players")
 
     def __str__(self):
-        return f"{self.name} ({self.phone})"
+        return f"{self.name} [{self.phone}]"
 
     class Meta:
         managed = False
@@ -62,7 +62,7 @@ class GameLocalizations(models.Model):
     play_sessions = models.ManyToManyField("PlaySessions", through="PlaySessionItems")
 
     def __str__(self):
-        return f"{self.name} ({self.barcode})"
+        return f"{self.name} [{self.barcode}]"
 
     class Meta:
         managed = False
@@ -101,7 +101,7 @@ class PlaySessions(models.Model):
     end_time = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.id} ({self.start_time} - {self.end_time})"
+        return f"{self.id} [{self.start_time} - {self.end_time}]"
 
     class Meta:
         managed = False
@@ -114,7 +114,7 @@ class Publishers(models.Model):
     country = models.ForeignKey(Countries, models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.name} ({self.country})"
+        return f"{self.name} [{self.country}]"
 
     class Meta:
         managed = False
