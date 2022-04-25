@@ -164,7 +164,7 @@ class Authorship(models.Model):
     game = models.ForeignKey("Game", models.CASCADE)
 
     def __str__(self):
-        return "Гра/Сеанс"
+        return "Зв'язок з"
 
     class Meta:
         managed = False
@@ -179,7 +179,7 @@ class PlaySessionItem(models.Model):
     count = models.PositiveIntegerField("кількість", default=1)
 
     def __str__(self):
-        return "Зв'язок"
+        return "Зв'язок з"
 
     class Meta:
         managed = False
@@ -193,7 +193,7 @@ class Player(models.Model):
     play_session = models.ForeignKey(PlaySession, models.CASCADE)
 
     def __str__(self):
-        return "Зв'язок"
+        return "Зв'язок з"
 
     class Meta:
         managed = False
