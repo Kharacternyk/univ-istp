@@ -32,7 +32,7 @@ class Category(models.Model):
 
 
 class ClubMember(models.Model):
-    phone = models.BigIntegerField("телефон", unique=True)
+    phone = models.PositiveBigIntegerField("телефон", unique=True)
     name = models.TextField("ім'я", blank=True, null=True)
     play_sessions = models.ManyToManyField(
         "PlaySession", through="Player", verbose_name="ігрові сеанси"
@@ -62,14 +62,14 @@ class Country(models.Model):
 
 
 class GameLocalization(models.Model):
-    barcode = models.BigIntegerField("штрих-код", primary_key=True)
+    barcode = models.PositiveBigIntegerField("штрих-код", primary_key=True)
     game = models.ForeignKey("Game", models.CASCADE, verbose_name="гра")
     name = models.TextField("ім'я")
     publishing_date = models.DateField("дата видання", blank=True, null=True)
     in_catalog_since_date = models.DateField(
         "дата появи у каталозі", blank=True, null=True
     )
-    in_catalog_count = models.IntegerField("наявна кількість у каталозі")
+    in_catalog_count = models.PositiveIntegerField("наявна кількість у каталозі")
     language = models.ForeignKey(
         "Language", models.CASCADE, blank=True, null=True, verbose_name="мова"
     )
@@ -92,11 +92,11 @@ class GameLocalization(models.Model):
 
 class Game(models.Model):
     name = models.TextField("ім'я")
-    playtime = models.IntegerField("орієнтовний час гри", blank=True, null=True)
-    min_players = models.IntegerField(
+    playtime = models.PositiveIntegerField("орієнтовний час гри", blank=True, null=True)
+    min_players = models.PositiveIntegerField(
         "мінімальна кількість гравців", blank=True, null=True
     )
-    max_players = models.IntegerField(
+    max_players = models.PositiveIntegerField(
         "максимальна кількість гравців", blank=True, null=True
     )
     category = models.ForeignKey(
