@@ -14,12 +14,6 @@ class PlaySessionForm(ModelForm):
             raise ValidationError({"end_time": "Must be after the start time"})
 
 
-class NarrowTextAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        TextField: {"widget": Textarea(attrs={"rows": 1, "cols": 80})},
-    }
-
-
 class InlineAuthorship(admin.TabularInline):
     model = models.Authorship
     extra = 1
@@ -35,21 +29,26 @@ class InlineItems(admin.TabularInline):
     extra = 1
 
 
+@admin.register(
+    models.Categories,
+    models.ClubMembers,
+    models.Countries,
+    models.GameLocalizations,
+    models.Languages,
+    models.Publishers,
+)
+class NarrowTextAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        TextField: {"widget": Textarea(attrs={"rows": 1, "cols": 80})},
+    }
+
+
+@admin.register(models.Authors, models.Games)
 class AuthorshipAdmin(NarrowTextAdmin):
     inlines = tuple([InlineAuthorship])
 
 
+@admin.register(models.PlaySessions)
 class PlaySessionsAdmin(NarrowTextAdmin):
     form = PlaySessionForm
     inlines = (InlineItems, InlinePlayers)
-
-
-admin.site.register(models.Authors, AuthorshipAdmin)
-admin.site.register(models.Categories, NarrowTextAdmin)
-admin.site.register(models.ClubMembers, NarrowTextAdmin)
-admin.site.register(models.Countries, NarrowTextAdmin)
-admin.site.register(models.GameLocalizations, NarrowTextAdmin)
-admin.site.register(models.Games, AuthorshipAdmin)
-admin.site.register(models.Languages, NarrowTextAdmin)
-admin.site.register(models.PlaySessions, PlaySessionsAdmin)
-admin.site.register(models.Publishers, NarrowTextAdmin)
