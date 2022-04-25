@@ -3,71 +3,73 @@ from django.db import models
 
 class Authors(models.Model):
     name = models.TextField(unique=True)
-    country = models.ForeignKey('Countries', models.DO_NOTHING, blank=True, null=True)
-    games = models.ManyToManyField('Games', through='Authorship')
+    country = models.ForeignKey("Countries", models.DO_NOTHING, blank=True, null=True)
+    games = models.ManyToManyField("Games", through="Authorship")
 
     def __str__(self):
-        return f'{self.name} ({self.country})'
+        return f"{self.name} ({self.country})"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'authors'
+        verbose_name_plural = db_table = "authors"
 
 
 class Categories(models.Model):
     name = models.TextField(unique=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'categories'
+        verbose_name_plural = db_table = "categories"
 
 
 class ClubMembers(models.Model):
     phone = models.BigIntegerField(unique=True)
     name = models.TextField(blank=True, null=True)
-    play_sessions = models.ManyToManyField('PlaySessions', through='Players')
+    play_sessions = models.ManyToManyField("PlaySessions", through="Players")
 
     def __str__(self):
-        return f'{self.name} ({self.phone})'
+        return f"{self.name} ({self.phone})"
 
     class Meta:
         managed = False
-        verbose_name_plural = 'club members'
-        db_table = 'club_members'
+        verbose_name_plural = "club members"
+        db_table = "club_members"
 
 
 class Countries(models.Model):
     name = models.TextField(unique=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'countries'
+        verbose_name_plural = db_table = "countries"
 
 
 class GameLocalizations(models.Model):
     barcode = models.BigIntegerField(primary_key=True)
-    game = models.ForeignKey('Games', models.DO_NOTHING)
+    game = models.ForeignKey("Games", models.DO_NOTHING)
     name = models.TextField()
     publishing_date = models.DateField(blank=True, null=True)
     in_catalog_since_date = models.DateField(blank=True, null=True)
     in_catalog_count = models.IntegerField()
-    language = models.ForeignKey('Languages', models.DO_NOTHING, blank=True, null=True)
-    publisher = models.ForeignKey('Publishers', models.DO_NOTHING, blank=True, null=True)
-    play_sessions = models.ManyToManyField('PlaySessions', through='PlaySessionItems')
+    language = models.ForeignKey("Languages", models.DO_NOTHING, blank=True, null=True)
+    publisher = models.ForeignKey(
+        "Publishers", models.DO_NOTHING, blank=True, null=True
+    )
+    play_sessions = models.ManyToManyField("PlaySessions", through="PlaySessionItems")
 
     def __str__(self):
-        return f'{self.name} ({self.barcode})'
+        return f"{self.name} ({self.barcode})"
 
     class Meta:
         managed = False
-        verbose_name_plural = 'game localization'
-        db_table = 'game_localizations'
+        verbose_name_plural = "game localization"
+        db_table = "game_localizations"
 
 
 class Games(models.Model):
@@ -78,22 +80,22 @@ class Games(models.Model):
     category = models.ForeignKey(Categories, models.DO_NOTHING, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'games'
+        verbose_name_plural = db_table = "games"
 
 
 class Languages(models.Model):
     name = models.TextField(unique=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'languages'
+        verbose_name_plural = db_table = "languages"
 
 
 class PlaySessions(models.Model):
@@ -101,12 +103,12 @@ class PlaySessions(models.Model):
     end_time = models.DateTimeField()
 
     def __str__(self):
-        return f'{self.id} ({self.start_time} - {self.end_time})'
+        return f"{self.id} ({self.start_time} - {self.end_time})"
 
     class Meta:
         managed = False
-        verbose_name_plural = 'play sessions'
-        db_table = 'play_sessions'
+        verbose_name_plural = "play sessions"
+        db_table = "play_sessions"
 
 
 class Publishers(models.Model):
@@ -114,30 +116,30 @@ class Publishers(models.Model):
     country = models.ForeignKey(Countries, models.DO_NOTHING, blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name} ({self.country})'
+        return f"{self.name} ({self.country})"
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'publishers'
+        verbose_name_plural = db_table = "publishers"
 
 
 class Authorship(models.Model):
     author = models.ForeignKey(Authors, models.DO_NOTHING)
-    game = models.ForeignKey('Games', models.DO_NOTHING)
+    game = models.ForeignKey("Games", models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'authorship'
+        db_table = "authorship"
 
 
 class PlaySessionItems(models.Model):
-    play_session = models.ForeignKey('PlaySessions', models.DO_NOTHING)
-    game = models.ForeignKey(GameLocalizations, models.DO_NOTHING, db_column='barcode')
+    play_session = models.ForeignKey("PlaySessions", models.DO_NOTHING)
+    game = models.ForeignKey(GameLocalizations, models.DO_NOTHING, db_column="barcode")
     count = models.IntegerField(default=1)
 
     class Meta:
         managed = False
-        db_table = 'play_session_items'
+        db_table = "play_session_items"
 
 
 class Players(models.Model):
@@ -146,4 +148,4 @@ class Players(models.Model):
 
     class Meta:
         managed = False
-        verbose_name_plural = db_table = 'players'
+        verbose_name_plural = db_table = "players"

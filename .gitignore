@@ -1,6 +1,7 @@
 __pycache__/
 .pgdata/
 .direnv/
+.pre-commit-config.yaml
 
 *.svg
 *.pdf
