@@ -3,15 +3,39 @@ from django.forms import Textarea
 from django.db.models import TextField
 from django.forms import ModelForm, ValidationError
 from bgclub import models
+from math import log10
 
 
 class PlaySessionForm(ModelForm):
     def clean(self):
-        start_time = self.cleaned_data["start_time"]
-        end_time = self.cleaned_data["end_time"]
+        start_time = self.cleaned_data.get("start_time")
+        end_time = self.cleaned_data.get("end_time")
+        if start_time and end_time and end_time < start_time:
+            raise ValidationError({"end_time": "Must be after the start time."})
 
-        if end_time < start_time:
-            raise ValidationError({"end_time": "Must be after the start time"})
+
+class ClubMemberForm(ModelForm):
+    def clean(self):
+        phone = self.cleaned_data.get("phone")
+        if phone and phone < 1e6:
+            raise ValidationError({"phone": "Must have at least 6 digits."})
+
+
+class GameLocalizationForm(ModelForm):
+    def clean(self):
+        barcode = self.cleaned_data.get("barcode")
+
+        if not barcode:
+            return
+
+        if barcode < 0:
+            raise ValidationError({"barcode": "Must be a positive integer."})
+
+        digits = int(log10(barcode))
+        if not 12 <= digits <= 13:
+            raise ValidationError(
+                {"barcode": f"Must have either 12 or 13 digits, got {digits}."}
+            )
 
 
 class InlineAuthorship(admin.TabularInline):
@@ -31,9 +55,7 @@ class InlineItems(admin.TabularInline):
 
 @admin.register(
     models.Categories,
-    models.ClubMembers,
     models.Countries,
-    models.GameLocalizations,
     models.Languages,
     models.Publishers,
 )
@@ -52,3 +74,13 @@ class AuthorshipAdmin(NarrowTextAdmin):
 class PlaySessionsAdmin(NarrowTextAdmin):
     form = PlaySessionForm
     inlines = (InlineItems, InlinePlayers)
+
+
+@admin.register(models.ClubMembers)
+class ClubMembersAdmin(NarrowTextAdmin):
+    form = ClubMemberForm
+
+
+@admin.register(models.GameLocalizations)
+class GameLocalizationsAdmin(NarrowTextAdmin):
+    form = GameLocalizationForm
