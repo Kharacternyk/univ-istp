@@ -26,12 +26,25 @@ class ClubMemberForm(ModelForm):
 class GameLocalizationForm(ModelForm):
     def clean(self):
         barcode = self.cleaned_data.get("barcode")
-        if not barcode:
-            return
-        digits = int(log10(barcode))
-        if not 12 <= digits <= 13:
+        publishing_date = self.cleaned_data.get("publishing_date")
+        in_catalog_since_date = self.cleaned_data.get("in_catalog_since_date")
+
+        if barcode:
+            digits = int(log10(barcode))
+            if not 12 <= digits <= 13:
+                raise ValidationError(
+                    {
+                        "barcode": f"Штрих-код має мати 12 або 13 цифр, отримано {digits}."
+                    }
+                )
+
+        if (
+            publishing_date
+            and in_catalog_since_date
+            and in_catalog_since_date < publishing_date
+        ):
             raise ValidationError(
-                {"barcode": f"Штрих-код має мати 12 або 13 цифр, отримано {digits}."}
+                {"in_catalog_since_date": "Гра не може з'явитись у каталозі до видання"}
             )
 
 
