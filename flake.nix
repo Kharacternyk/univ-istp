@@ -8,11 +8,11 @@
   outputs = { self, nixpkgs, utils, pre-commit }: utils.lib.eachDefaultSystem (system:
     with import nixpkgs { inherit system; }; {
       devShell = with {
-        python = pkgs.python310.withPackages (p: [ p.psycopg2 p.django ]);
-      }; pkgs.mkShell {
+        python = python310.withPackages (p: [ p.psycopg2 p.django ]);
+      }; mkShell {
         packages = [
           python
-          pkgs.postgresql_14
+          postgresql_14
         ];
         inherit (self.checks.${system}.pre-commit) shellHook;
       };
