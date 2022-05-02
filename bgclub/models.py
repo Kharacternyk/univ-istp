@@ -19,7 +19,7 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    name = models.TextField("ім'я", unique=True)
+    name = models.TextField("назва", unique=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -49,7 +49,7 @@ class ClubMember(models.Model):
 
 
 class Country(models.Model):
-    name = models.TextField("ім'я", unique=True)
+    name = models.TextField("назва", unique=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -64,7 +64,7 @@ class Country(models.Model):
 class GameLocalization(models.Model):
     barcode = models.PositiveBigIntegerField("штрих-код", primary_key=True)
     game = models.ForeignKey("Game", models.CASCADE, verbose_name="гра")
-    name = models.TextField("ім'я")
+    name = models.TextField("назва")
     in_catalog_count = models.PositiveIntegerField("наявна кількість у каталозі")
     publishing_date = models.DateField("дата видання", blank=True, null=True)
     in_catalog_since_date = models.DateField(
@@ -91,7 +91,7 @@ class GameLocalization(models.Model):
 
 
 class Game(models.Model):
-    name = models.TextField("ім'я")
+    name = models.TextField("назва")
     playtime = models.PositiveIntegerField("орієнтовний час гри", blank=True, null=True)
     min_players = models.PositiveIntegerField(
         "мінімальна кількість гравців", blank=True, null=True
@@ -117,7 +117,7 @@ class Game(models.Model):
 
 
 class Language(models.Model):
-    name = models.TextField("ім'я", unique=True)
+    name = models.TextField("назва", unique=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -144,7 +144,7 @@ class PlaySession(models.Model):
 
 
 class Publisher(models.Model):
-    name = models.TextField("ім'я", unique=True)
+    name = models.TextField("назва", unique=True)
     country = models.ForeignKey(
         Country, models.CASCADE, blank=True, null=True, verbose_name="країна"
     )
