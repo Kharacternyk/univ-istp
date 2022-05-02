@@ -1,7 +1,10 @@
-from django.views.generic import ListView
+from django_tables2 import SingleTableView
+
 from bgclub.models import GameLocalization
+from bgclub.tables import GameLocalizationTable
 
 
-class IndexView(ListView):
+class IndexView(SingleTableView):
     template_name = "index.html"
     model = GameLocalization
+    table_class = GameLocalizationTable

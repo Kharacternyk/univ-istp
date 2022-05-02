@@ -1,3 +1,4 @@
+{% load render_table from django_tables2 %}
 {% load static %}
 
 <!doctype html>
@@ -9,11 +10,7 @@
   </head>
   <body>
     <h1>Клуб Настільних Ігор</h1>
-    <ul>
-    {% for game in object_list %}
-      <li> {{game.name}} </li>
-    {% endfor %}
-    </ul>
+    {% render_table table %}
 
     <script src="{% static 'bootstrap.min.js' %}"></script>
   </body>
