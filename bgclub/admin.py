@@ -24,6 +24,8 @@ class ClubMemberForm(ModelForm):
 
 
 class GameLocalizationForm(ModelForm):
+    MIN_CATALOG_YEAR = 2015
+
     def clean(self):
         barcode = self.cleaned_data.get("barcode")
         publishing_date = self.cleaned_data.get("publishing_date")
@@ -44,7 +46,33 @@ class GameLocalizationForm(ModelForm):
             and in_catalog_since_date < publishing_date
         ):
             raise ValidationError(
-                {"in_catalog_since_date": "Гра не може з'явитись у каталозі до видання"}
+                {
+                    "in_catalog_since_date": "Гра не може з'явитись у каталозі до видання."
+                }
+            )
+
+        if in_catalog_since_date and in_catalog_since_date.year < self.MIN_CATALOG_YEAR:
+            raise ValidationError(
+                {
+                    "in_catalog_since_date": "Гра не може з'явитись у каталозі "
+                    + f"раніше {self.MIN_CATALOG_YEAR} року, коли відчинився клуб."
+                }
+            )
+
+
+class GameForm(ModelForm):
+    def clean(self):
+        min_players = self.cleaned_data.get("min_players")
+        max_players = self.cleaned_data.get("max_players")
+        if min_players == 0:
+            raise ValidationError({"min_players": "Гра не може проходити без гравців."})
+        if max_players == 0:
+            raise ValidationError({"max_players": "Гра не може проходити без гравців."})
+        if min_players and max_players and min_players > max_players:
+            raise ValidationError(
+                {
+                    "max_players": "Максимальна кількість гравців не може бути меншою за мінімальну."
+                }
             )
 
 
@@ -99,8 +127,14 @@ class NarrowTextAdmin(admin.ModelAdmin):
     }
 
 
-@admin.register(models.Author, models.Game)
-class AuthorshipAdmin(NarrowTextAdmin):
+@admin.register(models.Author)
+class AuthorsAdmin(NarrowTextAdmin):
+    inlines = tuple([InlineAuthorship])
+
+
+@admin.register(models.Game)
+class GamesAdmin(NarrowTextAdmin):
+    form = GameForm
     inlines = tuple([InlineAuthorship])
 
 

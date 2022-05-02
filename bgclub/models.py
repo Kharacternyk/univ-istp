@@ -171,6 +171,11 @@ class Authorship(models.Model):
         verbose_name = "авторство"
         verbose_name_plural = "авторство"
         db_table = "authorship"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["author", "game"], name="Автор не може зробити гру двічі"
+            )
+        ]
 
 
 class PlaySessionItem(models.Model):
