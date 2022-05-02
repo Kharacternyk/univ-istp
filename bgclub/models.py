@@ -9,7 +9,7 @@ class Author(models.Model):
     games = models.ManyToManyField("Game", through="Authorship", verbose_name="ігри")
 
     def __str__(self):
-        return f"{self.name} [{self.country}]"
+        return f"{self.name} ({self.country})"
 
     class Meta:
         managed = False
@@ -39,7 +39,7 @@ class ClubMember(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} [{self.phone}]"
+        return f"{self.name} ({self.phone})"
 
     class Meta:
         managed = False
@@ -81,7 +81,7 @@ class GameLocalization(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} [{self.barcode}]"
+        return f"{self.name} ({self.barcode})"
 
     class Meta:
         managed = False
@@ -134,7 +134,7 @@ class PlaySession(models.Model):
     end_time = models.DateTimeField("час кінця")
 
     def __str__(self):
-        return f"{self.id} [{self.start_time} — {self.end_time}]"
+        return f"{self.id} ({self.start_time} — {self.end_time})"
 
     class Meta:
         managed = False
@@ -150,7 +150,7 @@ class Publisher(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} [{self.country}]"
+        return f"{self.name} ({self.country})"
 
     class Meta:
         managed = False
