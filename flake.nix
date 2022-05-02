@@ -8,7 +8,11 @@
   outputs = { self, nixpkgs, utils, pre-commit }: utils.lib.eachDefaultSystem (system:
     with import nixpkgs { inherit system; }; {
       devShell = with {
-        python = python310.withPackages (p: [ p.psycopg2 p.django ]);
+        python = python310.withPackages (pythonPackages: with pythonPackages; [
+          psycopg2
+          django
+          django-tables2
+        ]);
       }; mkShell {
         packages = [
           python
