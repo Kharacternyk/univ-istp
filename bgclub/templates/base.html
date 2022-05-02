@@ -1,4 +1,3 @@
-{% load render_table from django_tables2 %}
 {% load static %}
 
 <!doctype html>
@@ -10,8 +9,7 @@
   </head>
   <body>
     <h1>Клуб Настільних Ігор</h1>
-    {% render_table table %}
-
+    {% block body %} {% endblock %}
     <script src="{% static 'bootstrap.min.js' %}"></script>
   </body>
 </html>
