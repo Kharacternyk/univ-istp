@@ -132,9 +132,11 @@ class Language(models.Model):
 class PlaySession(models.Model):
     start_time = models.DateTimeField("час початку")
     end_time = models.DateTimeField("час кінця")
-    club_members = models.ManyToManyField("ClubMember", through="Player")
+    club_members = models.ManyToManyField(
+        "ClubMember", through="Player", verbose_name="Гравці"
+    )
     game_localizations = models.ManyToManyField(
-        "GameLocalization", through="PlaySessionItem"
+        "GameLocalization", through="PlaySessionItem", verbose_name="Ігри"
     )
 
     def __str__(self):
