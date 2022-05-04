@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+{% block body %}
+  <form action="/session/new/time" method="get">
+    <input type="submit" />
+    {% render_table table %}
+    {% for barcode in barcodes %}
+      <input type="hidden" name="barcode" value="{{ barcode }}" />
+    {% endfor %}
+  </form>
+{% endblock %}

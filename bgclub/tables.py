@@ -1,6 +1,6 @@
-from django_tables2 import Table, Column, ManyToManyColumn
+from django_tables2 import Table, Column, ManyToManyColumn, TemplateColumn
 from django.utils.html import format_html, format_html_join
-from bgclub.models import GameLocalization, Game
+from bgclub.models import GameLocalization, ClubMember
 
 
 class DarkTableMeta:
@@ -10,8 +10,22 @@ class DarkTableMeta:
     }
 
 
+class ClubMemberTable(Table):
+    checkbox = TemplateColumn(
+        '<input type="checkbox" name="player_id" value="{{ record.id }}" />',
+        verbose_name="✓",
+    )
+
+    class Meta(DarkTableMeta):
+        model = ClubMember
+        fields = ("checkbox", "phone", "name")
+
+
 class GameLocalizationTable(Table):
-    name = Column(verbose_name="Гра")
+    checkbox = TemplateColumn(
+        '<input type="checkbox" name="barcode" value="{{ record.barcode }}" />',
+        verbose_name="✓",
+    )
     other_localizations = Column(
         verbose_name="Іншомовні варіанти", empty_values=(), orderable=False
     )
@@ -55,6 +69,7 @@ class GameLocalizationTable(Table):
     class Meta(DarkTableMeta):
         model = GameLocalization
         fields = (
+            "checkbox",
             "name",
             "other_localizations",
             "in_catalog_count",

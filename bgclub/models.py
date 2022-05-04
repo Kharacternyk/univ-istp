@@ -132,6 +132,10 @@ class Language(models.Model):
 class PlaySession(models.Model):
     start_time = models.DateTimeField("час початку")
     end_time = models.DateTimeField("час кінця")
+    club_members = models.ManyToManyField("ClubMember", through="Player")
+    game_localizations = models.ManyToManyField(
+        "GameLocalization", through="PlaySessionItem"
+    )
 
     def __str__(self):
         return f"{self.id} ({self.start_time} — {self.end_time})"
