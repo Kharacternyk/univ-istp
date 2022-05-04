@@ -1,15 +1,17 @@
 {% load static %}
+{% load django_bootstrap5 %}
 
 <!doctype html>
 <html>
   <head>
     <meta charset=utf-8>
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
   <body>
     <h1>Клуб Настільних Ігор</h1>
-    {% block body %} {% endblock %}
-    <script src="{% static 'bootstrap.min.js' %}"></script>
+    {% block body %}
+    {% endblock %}
+    {% bootstrap_javascript %}
   </body>
 </html>
