@@ -1,9 +1,33 @@
 {% extends "base.html" %}
 {% load render_table from django_tables2 %}
 {% load django_bootstrap5 %}
+{% load static %}
 {% block body %}
   <form action="/session/new/players" method="get">
-    {% bootstrap_button button_type="submit" content="Обрати" %}
-    {% render_table table %}
+    <div class="container">
+      <div class="row">
+        <div class="col card m-3">
+          <div class="card-body">
+            <h3 class="card-title"> Клуб настільних ігор </h3>
+            <p class="card-text">
+              Оберіть настільні ігри, що вам до вподоби, та почніть створення
+              ігрового сеансу.
+            </p>
+            {% bootstrap_button button_type="submit" content="Перейти до вибору гравців" %}
+          </div>
+        </div>
+        <div class="col card m-3" id="chart-language"></div>
+        <div class="col card m-3" id="chart-authors"></div>
+      </div>
+      <div class="row">
+        <div class="col card m-3">
+          <div class="card-body">
+            {% render_table table %}
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="{% static 'index.js' %}"></script>
 {% endblock %}

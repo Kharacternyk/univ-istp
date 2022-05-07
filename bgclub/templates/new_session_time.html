@@ -2,8 +2,25 @@
 {% load django_bootstrap5 %}
 {% block body %}
   <form method="post">
-    {% csrf_token %}
-    {% bootstrap_button button_type="submit" content="Створити" %}
-    {% bootstrap_form form layout="horizontal" %}
+    <div class="container">
+      <div class="row card m-3">
+        <div class="card-body">
+          <h3 class="card-title"> Клуб настільних ігор </h3>
+          <p class="card-text">
+            Оберіть час сеансу.
+          </p>
+          {% bootstrap_button button_type="submit" content="Створити сеанс" %}
+          <a href="/session/new/players" class="btn btn-secondary">
+            Повернутись до вибору гравців
+          </a>
+        </div>
+      </div>
+      <div class="row card m-3">
+        <div class="card-body">
+          {% csrf_token %}
+          {% bootstrap_form form layout="horizontal" %}
+        </div>
+      </div>
+    </div>
   </form>
 {% endblock %}

@@ -3,10 +3,25 @@
 {% load django_bootstrap5 %}
 {% block body %}
   <form action="/session/new/time" method="get">
-    {% bootstrap_button button_type="submit" content="Обрати" %}
-    {% render_table table %}
-    {% for barcode in barcodes %}
-      <input type="hidden" name="barcode" value="{{ barcode }}" />
-    {% endfor %}
+    <div class="container">
+      <div class="row card m-3">
+        <div class="card-body">
+          <h3 class="card-title"> Клуб настільних ігор </h3>
+          <p class="card-text">
+            Оберіть гравців, що братимуть участь у сеансі.
+          </p>
+          {% bootstrap_button button_type="submit" content="Перейти до вибору часу" %}
+          <a href="/" class="btn btn-secondary"> Повернутись до вибору ігор </a>
+        </div>
+      </div>
+      <div class="row card m-3">
+        <div class="card-body">
+          {% render_table table %}
+          {% for barcode in barcodes %}
+            <input type="hidden" name="barcode" value="{{ barcode }}" />
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </form>
 {% endblock %}
