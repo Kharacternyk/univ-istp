@@ -1,0 +1,47 @@
+digraph DB {
+    graph [ranksep=0.6]
+    node [shape=record fontname=monospace style=rounded]
+    edge [
+        arrowhead=none arrowtail=none headlabel=1 taillabel=∞ fontname=sans
+        labeldistance=1.5
+    ]
+
+    player [label="{ player \l
+        | name \l
+        | birth_year \l
+        | nickname \l
+        | country \l
+    }"]
+
+    country [label="{  country\l
+        | name \l
+    }"]
+
+    tournament [label="{ tournament \l
+        | is_ranking \l
+        | country \l
+    }"]
+
+    game [label="{ game\l
+        | date \l
+        | part_of_final \l
+        | left_player \l
+        | right_player \l
+        | tournament \l
+    }"]
+
+    frame [label="{ frame\l
+        | left_player_score\l
+        | right_player_score\l
+        | left_player_foul_count\l
+        | right_player_foul_count\l
+        | game \l
+    }"]
+
+    player -> country
+    tournament -> country
+    game -> player
+    game -> player
+    game -> tournament
+    frame -> game
+}
