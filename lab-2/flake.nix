@@ -8,24 +8,10 @@
   outputs = { self, nixpkgs, utils, pre-commit }: utils.lib.eachDefaultSystem (system:
     with import nixpkgs { inherit system; }; {
       devShell = with rec {
-        fastapi-crudrouter = python310Packages.buildPythonPackage rec {
-          pname = "fastapi-crudrouter";
-          version = "0.8.5";
-          src = python310Packages.fetchPypi {
-            inherit pname version;
-            format = "setuptools";
-            sha256 = "unPG45gZFZpOaoeXl7eHsgV/DmvjAFy5VuIIEkNJGUI=";
-          };
-          propagatedBuildInputs = [
-            python310Packages.fastapi
-          ];
-          doCheck = false;
-        };
         python = python310.withPackages (pythonPackages: with pythonPackages; [
           psycopg2
+          pony
           fastapi
-          fastapi-crudrouter
-          ormar
           uvicorn
         ]);
       }; mkShell {
