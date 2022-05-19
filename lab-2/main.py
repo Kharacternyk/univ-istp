@@ -46,7 +46,7 @@ def get_countries():
 @app.post("/countries")
 @orm.db_session
 def post_countries(country: CountrySchema):
-    Country(name=country.name)
+    Country(**country.dict())
 
 
 @app.get("/tournaments")
@@ -61,8 +61,4 @@ def get_tournaments():
 @app.post("/tournaments")
 @orm.db_session
 def post_tournaments(tournament: TournamentSchema):
-    Tournament(
-        name=tournament.name,
-        is_ranking=tournament.is_ranking,
-        country=Country[tournament.country],
-    )
+    Tournament(**tournament.dict())
