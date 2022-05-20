@@ -1,5 +1,11 @@
-from fastapi import FastAPI
-from pony.orm import db_session, select
+from fastapi import FastAPI, HTTPException
+from pony.orm import (
+    db_session,
+    select,
+    ObjectNotFound,
+    TransactionIntegrityError,
+    commit,
+)
 from inspect import getmembers
 import inflect
 import models
@@ -24,7 +30,12 @@ def create_get_all_endpoint(model_class):
 def create_get_endpoint(model_class):
     @db_session
     def handler(id: int):
-        return model_class[id].to_dict(with_collections=True)
+        try:
+            return model_class[id].to_dict(with_collections=True)
+        except ObjectNotFound:
+            raise HTTPException(
+                404, f"{model_class.__name__} with ID {id} does not exist."
+            )
 
     endpoint = inflect_engine.plural(model_class.__name__.lower())
     handler.__name__ = "get_" + model_class.__name__.lower()
@@ -34,7 +45,15 @@ def create_get_endpoint(model_class):
 def create_post_endpoint(model_class):
     @db_session
     def handler(schema: model_class.Schema):
-        model_class(**schema.dict())
+        try:
+            model_class(**schema.dict())
+            commit()
+        except Exception as error:
+            raise HTTPException(
+                400,
+                f"Cannot create a {model_class.__name__}"
+                + " because it references an entity that does not exist",
+            )
 
     endpoint = inflect_engine.plural(model_class.__name__.lower())
     handler.__name__ = "post_" + model_class.__name__.lower()
@@ -44,7 +63,12 @@ def create_post_endpoint(model_class):
 def create_delete_endpoint(model_class):
     @db_session
     def handler(id: int):
-        model_class[id].delete()
+        try:
+            model_class[id].delete()
+        except ObjectNotFound:
+            raise HTTPException(
+                404, f"{model_class.__name__} with ID {id} does not exist."
+            )
 
     endpoint = inflect_engine.plural(model_class.__name__.lower())
     handler.__name__ = "delete_" + model_class.__name__.lower()
