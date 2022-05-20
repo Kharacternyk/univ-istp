@@ -13,6 +13,7 @@
           pony
           fastapi
           uvicorn
+          inflect
         ]);
       }; mkShell {
         packages = [
