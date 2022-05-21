@@ -45,7 +45,7 @@ def create_get_endpoint(model_class):
 def create_post_endpoint(model_class):
     @db_session
     def handler(schema: model_class.Schema):
-        model_class(**schema.dict())
+        return model_class(**schema.dict()).to_dict(with_collections=True)
 
     endpoint = inflect_engine.plural(model_class.__name__.lower())
     handler.__name__ = "post_" + model_class.__name__.lower()

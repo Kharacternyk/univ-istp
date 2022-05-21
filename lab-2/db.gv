@@ -8,8 +8,8 @@ digraph DB {
 
     player [label="{ player \l
         | name \l
-        | birth_year \l
         | nickname \l
+        | birth_date \l
         | country \l
     }"]
 
@@ -18,6 +18,7 @@ digraph DB {
     }"]
 
     tournament [label="{ tournament \l
+        | name \l
         | is_ranking \l
         | country \l
     }"]
@@ -33,8 +34,6 @@ digraph DB {
     frame [label="{ frame\l
         | left_player_score\l
         | right_player_score\l
-        | left_player_foul_count\l
-        | right_player_foul_count\l
         | game \l
     }"]
 
