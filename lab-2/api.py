@@ -45,15 +45,7 @@ def create_get_endpoint(model_class):
 def create_post_endpoint(model_class):
     @db_session
     def handler(schema: model_class.Schema):
-        try:
-            model_class(**schema.dict())
-            commit()
-        except Exception as error:
-            raise HTTPException(
-                400,
-                f"Cannot create a {model_class.__name__}"
-                + " because it references an entity that does not exist",
-            )
+        model_class(**schema.dict())
 
     endpoint = inflect_engine.plural(model_class.__name__.lower())
     handler.__name__ = "post_" + model_class.__name__.lower()

@@ -23,6 +23,13 @@ class Tournament(db.Entity):
         is_ranking: bool
         country: int
 
+        @validator("country")
+        @db_session
+        def country_exists(cls, value):
+            if not Country.get(id=value):
+                raise ValueError(f"country with ID {value} does not exist")
+            return value
+
 
 db.bind(provider="postgres", host="localhost", database="snookerdb")
 db.generate_mapping(create_tables=True)
