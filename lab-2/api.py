@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from pony.orm import (
     db_session,
     select,
@@ -52,6 +53,16 @@ def create_post_endpoint(model_class):
     app.post("/" + endpoint, tags=[model_class.__name__])(handler)
 
 
+def create_put_endpoint(model_class):
+    @db_session
+    def handler(schema: model_class.Schema):
+        return model_class(**schema.dict()).to_dict(with_collections=True)
+
+    endpoint = inflect_engine.plural(model_class.__name__.lower())
+    handler.__name__ = "post_" + model_class.__name__.lower()
+    app.post("/" + endpoint, tags=[model_class.__name__])(handler)
+
+
 def create_delete_endpoint(model_class):
     @db_session
     def handler(id: int):
@@ -72,3 +83,5 @@ for name, value in getmembers(models, lambda value: hasattr(value, "Schema")):
     create_get_endpoint(value)
     create_post_endpoint(value)
     create_delete_endpoint(value)
+
+app.mount("/forms", StaticFiles(directory="forms"), name="forms")

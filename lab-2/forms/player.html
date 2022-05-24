@@ -1,0 +1,50 @@
+<html>
+    <body>
+        <form method="post" id="player_form">
+            <p>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name">
+            </p>
+            <p>
+                <label for="nickname">Nickname:</label>
+                <input type="text" name="nickname" id="nickname">
+            </p>
+            <p>
+                <label for="birth_date">Birth date:</label>
+                <input type="text" name="birth_date" id="birth_date">
+            </p>
+            <p>
+                <label for="country">Country</label>
+                <input type="text" name="country" id="country">
+            </p>
+            <input type="submit">
+        </form>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#player_form").on("submit", function(event) {
+                    event.preventDefault();
+                    var array = $("#player_form").serializeArray();
+                    var payload = {};
+                    $.map(array, function(item) {
+                        payload[item.name] = item.value;
+                    });
+
+                    $.ajax({
+                      type: "POST",
+                      url: "/players",
+                      data: JSON.stringify(payload),
+                      success: () => alert("Success!"),
+                      error: () => alert("Error!"),
+                      dataType: "json",
+                      contentType : "application/json"
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
