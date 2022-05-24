@@ -1,0 +1,30 @@
+digraph UseCase {
+    rankdir=LR
+    edge [
+        style=bold
+    ]
+    node [
+        shape=box
+        style="bold,diagonals"
+        fontname="monospace italic"
+    ]
+    User [label="Користувач API"]
+
+    node [
+        style="rounded,bold"
+        shape=box
+    ]
+    subgraph cluster_UseCases {
+        style="rounded,dashed,bold"
+        edge [style=dashed]
+        c1 [label="Внести дані про гравця"]
+        c2 [label="Внести дані про турнір та його складові"]
+        c3 [label="Видалити дані про гравця"]
+        c4 [label="Видалити дані про турнір та його складові"]
+        c5 [label="Отримати дані про конкретного гравця"]
+        c6 [label="Отримати дані про конкретний турнір чи його складові"]
+        c7 [label="Отримати дані про всіх гравця"]
+        c8 [label="Отримати дані про всі турніри чи їх складові"]
+    }
+    User -> {c1 c2 c3 c4 c5 c6 c7 c8}
+}
