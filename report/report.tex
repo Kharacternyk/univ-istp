@@ -1,0 +1,106 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+\usepackage[ukrainian]{babel}
+
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+
+\usepackage[left=1.18in, right=0.59in, top=0.79in, bottom=0.79in]{geometry}
+
+\usepackage{setspace}
+
+\usepackage{tocloft}
+
+\cftsetindents{section}{0em}{2em}
+\cftsetindents{subsection}{0em}{2em}
+
+\renewcommand\cfttoctitlefont{\hfill\Large\bfseries}
+\renewcommand\cftaftertoctitle{\hfill\mbox{}}
+
+\usepackage{etoolbox}
+\patchcmd{\tableofcontents}{\contentsname}{\MakeUppercase\contentsname}{}{}
+
+\let\Huge\normalsize
+\let\huge\normalsize
+\let\LARGE\normalsize
+\let\Large\normalsize
+\let\large\normalsize
+
+\begin{document}
+  \setstretch{1.5}
+
+  \begin{titlepage}
+    \begin{center}
+      \textbf{КИЇВСЬКИЙ НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ} \\
+      \textbf{ІМЕНІ ТАРАСА ШЕВЧЕНКА} \\
+      Факультет комп'ютерних наук та кібернетики \vspace{5em}
+
+      \textbf{Звіт} \\
+      за спеціальністю 122 Комп'ютерні науки \\
+      на тему: \\
+      \textbf{Розробка вебзастосунку для клубу настільних ігор}
+    \end{center}
+    \vfill
+    \begin{flushleft}
+      Виконав студент 2-го курсу \\
+      Віннічук Назар Дмитрович \vspace{2em}
+
+      Науковий керівник: \\
+      доцент, кандидат фіз.-мат. наук \\
+      Омельчук Людмила Леонідівна
+    \end{flushleft}
+    \begin{flushright}
+      Засвідчую, що у звіті немає запозичень з \\
+      праць інших авторів без відповідних посилань.
+
+      Студент \hspace{7.25em} Віннічук Н. Д.
+    \end{flushright}
+    \vspace{5em}
+    \begin{center}
+      Київ -- 2022
+    \end{center}
+  \end{titlepage}
+
+  \begin{center}
+    \textbf{РЕФЕРАТ}
+  \end{center}
+
+  НАСТІЛЬНІ ІГРИ, DJANGO, PYTHON, NIX, POSTGRESQL,
+  BOOTSTRAP, ВЕБЗАСТОСУНОК, MVC, MODEL, VIEW, CONTROLLER, ORM.
+
+  Об'єктом роботи є ознайомлення із сучасними вебтехнологіями на базі вебфреймворку
+  Django та системою керування базами даних PostgreSQL.
+
+  Предметом роботи є вебзастосунок з реляційною базою даних для забезпечення
+  функціонування клубу настільних ігор.
+
+  Метою роботи є створення функціонуючого вебзастосунку для адміністраторів та
+  відвідувачів клубу настільних ігор.
+
+  Інструменти розроблення: об'єктно-орієнтована мова програмування Python,
+  вебфреймворк Django, система керування базами даних PostgreSQL, мова опису програмних
+  пакетів та середовищ розробки Nix, мова середовища вебпереглядача JavaScript, мова
+  опису структури вебсторінок HTML, мова опису стилів вебсторінок CSS, бібліотека
+  готових стилів вебсторінок Bootstrap.
+
+  Результати роботи: розроблено вебзастосунок на основі сучасних вебтехнологій,
+  виконано роботу з проектування реляційної бази даних та візуального оформлення
+  вебсторінок.
+
+  Програмний продукт здатен використовуватись для реалізації функціонування
+  клубу настільних ігор. Вимоги до користувачів: знання української мови (мови
+  інтерфейсу застосунку).
+
+  \pagebreak
+
+  \tableofcontents
+  \newpage
+
+  \section{СКОРОЧЕННЯ ТА УМОВНІ ПОЗНАЧЕННЯ}
+  \section{ВСТУП}
+  \section{РОЗДІЛ 2. ОГЛЯД ВИКОРИСТАНИХ ТЕХНОЛОГІЙ}
+  \subsection{Django}
+  \subsection{PostgreSQL}
+  \subsection{Nix}
+
+\end{document}
